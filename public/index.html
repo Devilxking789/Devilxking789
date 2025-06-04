@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WhatsApp Ban Session Web</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #111;
+      color: #00ffcc;
+    }
+    button {
+      padding: 20px;
+      margin: 20px;
+      font-size: 20px;
+      background-color: #00ffcc;
+      color: #111;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: #444;
+      cursor: not-allowed;
+    }
+    #qr img {
+      margin-top: 20px;
+      border: 5px solid #00ffcc;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>👁️ Welcome to WhatsApp Ban Session Web</h1>
+  <h2>🚀 Created by <span style="color: #ff00ff;">DEVIL KING</span></h2>
+  <p>Scan the QR code below to activate your WhatsApp session</p>
+  <button onclick="getQR()">QR SCAN</button>
+  <button disabled>PAIR CODE (Coming Soon)</button>
+  <div id="qr"></div>
+  <script>
+    async function getQR() {
+      const res = await fetch("/generate-qr");
+      const qr = await res.text();
+      document.getElementById("qr").innerHTML = `<img src='${qr}' />`;
+    }
+  </script>
+</body>
+</html>
