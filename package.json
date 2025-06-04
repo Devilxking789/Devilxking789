@@ -1,19 +1,18 @@
 {
-  "name": "public-whatsapp-pair-bot",
+  "name": "whatsapp-pair-code-bot",
   "version": "1.0.0",
-  "description": "Public WhatsApp session bot with QR scan",
+  "description": "Public WhatsApp Pair Bot with QR and Pair Code",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
     "@hapi/boom": "^10.0.0",
-    "@whiskeysockets/baileys": "^6.6.0",
-    "express": "^4.18.2",
-    "qrcode": "^1.5.1",
-    "dotenv": "^16.4.0"
-  },
-  "engines": {
-    "node": ">=18.0.0"
+    "@whiskeysockets/baileys": "^6.7.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.19.2",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7",
+    "qrcode": "^1.5.3"
   }
 }
