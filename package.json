@@ -1,0 +1,19 @@
+{
+  "name": "public-whatsapp-pair-bot",
+  "version": "1.0.0",
+  "description": "Public WhatsApp session bot with QR scan",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@hapi/boom": "^10.0.0",
+    "@whiskeysockets/baileys": "^6.6.0",
+    "express": "^4.18.2",
+    "qrcode": "^1.5.1",
+    "dotenv": "^16.4.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
