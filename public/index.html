@@ -1,108 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>WhatsApp Ban Session Web</title>
+  <meta charset="UTF-8" />
+  <title>WhatsApp Pair Bot</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: Arial, sans-serif;
       text-align: center;
-      padding: 50px;
-      background: linear-gradient(to right, #0f0f0f, #1a1a1a);
-      color: #00ffcc;
+      background: #111;
+      color: white;
+      padding-top: 40px;
     }
-    h1, h2 {
-      margin: 0 0 10px;
+    h1 {
+      font-size: 26px;
+      margin-bottom: 10px;
     }
     button {
-      padding: 15px 30px;
-      margin: 15px;
-      font-size: 18px;
-      background-color: #00ffcc;
-      color: #111;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #00c853;
+      color: white;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
+      margin: 10px;
     }
-    #qr img {
-      margin-top: 20px;
-      border: 5px solid #00ffcc;
-      border-radius: 10px;
-    }
-    #pairCodeBox {
-      display: none;
-      margin-top: 20px;
+    button:hover {
+      background: #00a043;
     }
     input {
       padding: 10px;
       font-size: 16px;
-      border-radius: 5px;
-      border: none;
-      margin-right: 10px;
+      width: 200px;
+      margin-top: 10px;
     }
-    #message {
+    #qrBox {
       margin-top: 20px;
-      font-size: 16px;
-      color: #00ffaa;
     }
-    a.connect {
-      display: inline-block;
-      background-color: #ff00ff;
-      color: #fff;
-      padding: 12px 25px;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 18px;
-      font-weight: bold;
+    #telegramBtn {
       margin-top: 40px;
-      transition: background-color 0.3s ease;
-    }
-    a.connect:hover {
-      background-color: #e600e6;
+      background: #229ED9;
     }
   </style>
 </head>
 <body>
-  <h1>👁️ Welcome to WhatsApp Ban Session Web</h1>
-  <h2>🚀 Created by <span style="color: #ff00ff;">DEVIL KING</span></h2>
-  <p>Scan QR or use Pair Code to activate WhatsApp session</p>
+  <h1>👋 Welcome to WhatsApp Ban Session Web</h1>
+  <p>🛠 Created by <strong>DEVIL KING</strong></p>
 
-  <button onclick="getQR()">QR SCAN</button>
-  <button onclick="showPairBox()">PAIR CODE</button>
+  <button onclick="loadQR()">🔍 QR SCAN</button>
+  <br />
 
-  <div id="qr"></div>
-
-  <div id="pairCodeBox">
-    <input type="text" id="pairCodeInput" placeholder="Enter Pair Code" />
-    <button onclick="submitPairCode()">Submit</button>
+  <button onclick="showPairInput()">🔑 Pair Code</button>
+  <div id="pairInput" style="display:none;">
+    <input id="pairCode" placeholder="Enter Pair Code" />
+    <br />
+    <button onclick="submitPair()">Submit Pair Code</button>
   </div>
 
-  <div id="message"></div>
+  <div id="qrBox"></div>
 
-  <a class="connect" href="https://t.me/DEVILXKING006" target="_blank">
-    🔗 CONNECT: t.me/DEVILXKING006
-  </a>
+  <button id="telegramBtn" onclick="window.open('https://t.me/DEVILXKING006')">
+    🔗 CONNECT OWNER 
+  </button>
 
   <script>
-    async function getQR() {
-      const res = await fetch("/generate-qr");
-      const qr = await res.text();
-      document.getElementById("qr").innerHTML = `<img src='${qr}' />`;
+    function loadQR() {
+      fetch("/qr")
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById("qrBox").innerHTML = html;
+        })
+        .catch(err => {
+          alert("QR Load Failed");
+          console.error(err);
+        });
     }
 
-    function showPairBox() {
-      document.getElementById("pairCodeBox").style.display = "block";
+    function showPairInput() {
+      document.getElementById("pairInput").style.display = "block";
     }
 
-    async function submitPairCode() {
-      const code = document.getElementById("pairCodeInput").value;
-      const res = await fetch("/pair-code", {
+    function submitPair() {
+      const code = document.getElementById("pairCode").value;
+      fetch("/pair-code", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code })
-      });
-
-      const result = await res.text();
-      document.getElementById("message").innerText = result;
+      })
+        .then(res => res.text())
+        .then(msg => alert(msg))
+        .catch(err => {
+          alert("❌ Pair Code failed.");
+          console.error(err);
+        });
     }
   </script>
 </body>
