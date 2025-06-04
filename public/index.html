@@ -4,45 +4,105 @@
   <title>WhatsApp Ban Session Web</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       text-align: center;
       padding: 50px;
-      background-color: #111;
+      background: linear-gradient(to right, #0f0f0f, #1a1a1a);
       color: #00ffcc;
     }
+    h1, h2 {
+      margin: 0 0 10px;
+    }
     button {
-      padding: 20px;
-      margin: 20px;
-      font-size: 20px;
+      padding: 15px 30px;
+      margin: 15px;
+      font-size: 18px;
       background-color: #00ffcc;
       color: #111;
       border: none;
       border-radius: 10px;
       cursor: pointer;
     }
-    button:disabled {
-      background-color: #444;
-      cursor: not-allowed;
-    }
     #qr img {
       margin-top: 20px;
       border: 5px solid #00ffcc;
       border-radius: 10px;
+    }
+    #pairCodeBox {
+      display: none;
+      margin-top: 20px;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      margin-right: 10px;
+    }
+    #message {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #00ffaa;
+    }
+    a.connect {
+      display: inline-block;
+      background-color: #ff00ff;
+      color: #fff;
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 40px;
+      transition: background-color 0.3s ease;
+    }
+    a.connect:hover {
+      background-color: #e600e6;
     }
   </style>
 </head>
 <body>
   <h1>👁️ Welcome to WhatsApp Ban Session Web</h1>
   <h2>🚀 Created by <span style="color: #ff00ff;">DEVIL KING</span></h2>
-  <p>Scan the QR code below to activate your WhatsApp session</p>
+  <p>Scan QR or use Pair Code to activate WhatsApp session</p>
+
   <button onclick="getQR()">QR SCAN</button>
-  <button disabled>PAIR CODE (Coming Soon)</button>
+  <button onclick="showPairBox()">PAIR CODE</button>
+
   <div id="qr"></div>
+
+  <div id="pairCodeBox">
+    <input type="text" id="pairCodeInput" placeholder="Enter Pair Code" />
+    <button onclick="submitPairCode()">Submit</button>
+  </div>
+
+  <div id="message"></div>
+
+  <a class="connect" href="https://t.me/DEVILXKING006" target="_blank">
+    🔗 CONNECT: t.me/DEVILXKING006
+  </a>
+
   <script>
     async function getQR() {
       const res = await fetch("/generate-qr");
       const qr = await res.text();
       document.getElementById("qr").innerHTML = `<img src='${qr}' />`;
+    }
+
+    function showPairBox() {
+      document.getElementById("pairCodeBox").style.display = "block";
+    }
+
+    async function submitPairCode() {
+      const code = document.getElementById("pairCodeInput").value;
+      const res = await fetch("/pair-code", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code })
+      });
+
+      const result = await res.text();
+      document.getElementById("message").innerText = result;
     }
   </script>
 </body>
